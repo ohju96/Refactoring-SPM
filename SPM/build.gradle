@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-devtools' //view 빌드 기능
+	implementation 'org.apache.poi:poi-ooxml:4.1.2' //엑셀 인식
+	implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일
+	implementation 'net.sourceforge.tess4j:tess4j:4.4.1' //ocr
+	implementation 'commons-codec:commons-codec:1.10' //ocr을 위한.
+	implementation group: 'org.openpnp', name: 'opencv', version: '4.5.1-2' //이미지 처리를 위한..
+	implementation 'net.nurigo:sdk:4.2.3' //문자API를 위한..
+	implementation 'net.nurigo:javaSDK:2.2' //문자API를 위한..
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
