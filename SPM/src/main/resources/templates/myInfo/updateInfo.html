@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>소경관</title>
+        <link rel="icon" type="/bootstarp/assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/bootstrap/css/styles.css}" rel="stylesheet" />
+
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+            function sample4_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                        var extraRoadAddr = ''; // 참고 항목 변수
+
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraRoadAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraRoadAddr !== ''){
+                            extraRoadAddr = ' (' + extraRoadAddr + ')';
+                        }
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('sample4_postcode').value = data.zonecode;
+                        document.getElementById("sample4_roadAddress").value = roadAddr;
+                        document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+                        // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                        if(roadAddr !== ''){
+                            document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                        } else {
+                            document.getElementById("sample4_extraAddress").value = '';
+                        }
+
+                        var guideTextBox = document.getElementById("guide");
+                        // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                        if(data.autoRoadAddress) {
+                            var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                            guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                            guideTextBox.style.display = 'block';
+
+                        } else if(data.autoJibunAddress) {
+                            var expJibunAddr = data.autoJibunAddress;
+                            guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                            guideTextBox.style.display = 'block';
+                        } else {
+                            guideTextBox.innerHTML = '';
+                            guideTextBox.style.display = 'none';
+                        }
+                    }
+                }).open();
+            }
+        </script>
+
+        <style>
+            .field-error {
+                border-color: #dc3545;
+                color: #dc3545;
+            }
+        </style>
+
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="management" th:href="@{/user/index}">소경관</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="myInfo/myInfo.html" th:href="@{/myInfo/myInfo}">내 정보</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="carManagement/carManagement.html" th:href="@{/carManagement/carManagement}">차량 관리</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="carList/carList.html" th:href="@{/carList/carList}">차량 리스트</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="carCheck/carCheck.html" th:href="@{/carCheck/carCheck}">차량 체크</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="management/management.html" th:href="@{/management/management}">관리</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('/bootstrap/assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>내 정보</h1>
+                            <span class="subheading">내 정보를 확인하고 수정할 수 있습니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+
+                    <form th:action="@{/myInfo/updateInfo}" th:object="${userVo}" method="post">
+
+                        <input th:type="hidden" th:value="${session.userDTO.userNo}" name="userNo" id="userNo">
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg1">이름</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   th:placeholder="${session.userDTO.userName}" th:value="${session.userDTO.userName}" name="userName" id="userName" readonly>
+                        </div>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg2">연락처</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   th:placeholder="${session.userDTO.userPn}" th:field="*{userPn}" id="phoneNumber" >
+                        </div>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg3">이메일</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   th:placeholder="${session.userDTO.userEmail}" th:value="${session.userDTO.userEmail}" name="userEmail" id="userEmail" readonly>
+                        </div>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg4">아이디</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   th:placeholder="${session.userDTO.userId}" th:value="${session.userDTO.userId}" name="userId" id="userId" readonly>
+                        </div>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg5">비밀번호</span>
+                            <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   placeholder="새로운 비밀번호를 입력해주세요." th:field="*{userPw}" id="pw" >
+                        </div>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg7">비밀번호 재확인</span>
+                            <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                                   placeholder="새로운 비밀번호를 입력해주세요." th:field="*{userPwc}" id="pwc" >
+                        </div>
+
+                        <input type="hidden" id="sample4_postcode" placeholder="우편번호">
+                        <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소">
+                        <span id="guide" style="color:#999;display:none"></span>
+                        <input type="hidden" id="sample4_detailAddress" placeholder="상세주소">
+                        <input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg6">근무지</span>
+                            <input type="text" onclick="sample4_execDaumPostcode()" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+                            th:placeholder="${session.userDTO.userAddr}" th:field="*{userAddr}" id="sample4_roadAddress" >
+                        </div>
+
+                        <br />
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary text-uppercase" type="submit">완료</button>
+
+                    </form>
+
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" th:href="@{/carManagement/carManagement}">뒤로가기</a></div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+        <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a th:href="@{https://ohju96.notion.site/apache-poi-mongoDB-7946445271c54b61b5408120e1f16119}" th:target="_blank">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-solid fa-book fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a th:href="@{https://ohju.tistory.com/category/Project/%EC%86%8C%EA%B2%BD%EA%B4%80}" th:target="_blank">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-solid fa-t fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a th:href="@{https://github.com/ohju96/S_P_M_Project}" th:target="_blank">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Small Parking Manager</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/bootstarp/js/scripts.js"></script>
+    </body>
+</html>
