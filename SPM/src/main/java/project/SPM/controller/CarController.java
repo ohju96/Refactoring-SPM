@@ -13,8 +13,8 @@ import project.SPM.Entity.UserEntity;
 import project.SPM.dto.CarDTO;
 import project.SPM.dto.SessionIdDTO;
 import project.SPM.dto.UserDTO;
-import project.SPM.service.ICarListService;
-import project.SPM.service.ICarService;
+import project.SPM.service.CarListService;
+import project.SPM.service.CarService;
 import project.SPM.validator.AddCarValidator;
 import project.SPM.vo.AddCarVo;
 import project.SPM.vo.UpdateCarListVo;
@@ -29,8 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
 
-    private final ICarService iCarService;
-    private final ICarListService iCarListService;
+    private final CarService iCarService;
+    private final CarListService iCarListService;
     private final AddCarValidator addCarValidator;
 
     @InitBinder("addCarVo")

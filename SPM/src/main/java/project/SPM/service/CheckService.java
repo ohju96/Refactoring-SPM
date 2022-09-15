@@ -1,14 +1,13 @@
 package project.SPM.service;
 
 import project.SPM.dto.CarDTO;
-import project.SPM.dto.OcrDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.dto.ViewCarDTO;
 import project.SPM.vo.CheckListVo;
 
 import java.util.List;
 
-public interface ICheckService {
+public interface CheckService {
 
     // 직접 저장 로직
     boolean saveTouchCheck(CheckListVo checkListVo) throws Exception;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import project.SPM.Entity.UserEntity;
 import project.SPM.dto.CarDTO;
 import project.SPM.dto.UserDTO;
-import project.SPM.service.ICarListService;
+import project.SPM.service.CarListService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarListController {
 
-    private final ICarListService iCarListService;
+    private final CarListService iCarListService;
 
     // 차량 리스트 페이지 - 기본 화면
     @GetMapping("/carList")

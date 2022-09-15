@@ -12,7 +12,7 @@ import project.SPM.dto.CarDTO;
 import project.SPM.dto.SessionIdDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.mapper.ICarMapper;
-import project.SPM.service.ICarService;
+import project.SPM.service.CarService;
 import project.SPM.vo.UpdateCarListVo;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Service("CarService")
 @RequiredArgsConstructor
-public class CarService implements ICarService {
+public class CarServiceImpl implements CarService {
 
     private final ICarMapper iCarMapper;
 

@@ -1,10 +1,9 @@
 package project.SPM.service;
 
 import project.SPM.Entity.UserEntity;
-import project.SPM.dto.MailDTO;
 import project.SPM.dto.UserDTO;
 
-public interface IUserService {
+public interface UserService {
 
     // 회원가입
     String insertUser(UserDTO userDTO) throws Exception;

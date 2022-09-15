@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import project.SPM.dto.CarDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.mapper.ICarListMapper;
-import project.SPM.service.ICarListService;
+import project.SPM.service.CarListService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Component("CarListService")
 @RequiredArgsConstructor
-public class CarListService implements ICarListService {
+public class CarListServiceImpl implements CarListService {
 
     private final ICarListMapper iCarListMapper;
 

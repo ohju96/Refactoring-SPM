@@ -16,7 +16,7 @@ import project.SPM.Entity.UserEntity;
 import project.SPM.dto.CarDTO;
 import project.SPM.dto.NoticeDTO;
 import project.SPM.dto.VisitorDTO;
-import project.SPM.service.IManagementService;
+import project.SPM.service.ManagementService;
 import project.SPM.validator.NoticeValidator;
 import project.SPM.validator.VisitorValidator;
 
@@ -32,7 +32,7 @@ public class SmsController {
 
     private final VisitorValidator visitorValidator;
     private final NoticeValidator noticeValidator;
-    private final IManagementService iManagementService;
+    private final ManagementService iManagementService;
 
     @Value("${sms.key}")
     private String smsKey;

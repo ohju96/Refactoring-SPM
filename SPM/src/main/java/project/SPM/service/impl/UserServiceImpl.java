@@ -10,7 +10,6 @@ import project.SPM.dto.MailDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.repository.IUserRepository;
 import project.SPM.repository.impl.UserRepository;
-import project.SPM.service.IUserService;
 import project.SPM.util.EncryptUtil;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service("UserService")
-public class UserService implements IUserService {
+public class UserServiceImpl implements project.SPM.service.UserService {
 
     private final UserRepository userRepository;
     private final IUserRepository iUserRepository;

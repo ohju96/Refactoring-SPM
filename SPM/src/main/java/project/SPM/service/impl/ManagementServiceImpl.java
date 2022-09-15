@@ -3,7 +3,6 @@ package project.SPM.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.exception.NurigoUnknownException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
@@ -11,18 +10,16 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import project.SPM.dto.CarDTO;
-import project.SPM.dto.MailDTO;
 import project.SPM.dto.NoticeDTO;
 import project.SPM.dto.SmsDTO;
 import project.SPM.mapper.IManagementMapper;
-import project.SPM.service.IManagementService;
 
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ManagementService implements IManagementService {
+public class ManagementServiceImpl implements project.SPM.service.ManagementService {
 
     private final IManagementMapper iManagementMapper;
     private DefaultMessageService messageService;

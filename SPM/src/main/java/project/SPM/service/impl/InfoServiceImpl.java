@@ -9,8 +9,7 @@ import project.SPM.dto.ViewCarDTO;
 import project.SPM.mapper.ICarMapper;
 import project.SPM.mapper.ICheckMapper;
 import project.SPM.repository.IUserRepository;
-import project.SPM.repository.impl.UserRepository;
-import project.SPM.service.IInfoService;
+import project.SPM.service.InfoService;
 import project.SPM.util.EncryptUtil;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class InfoService implements IInfoService {
+public class InfoServiceImpl implements InfoService {
 
     private final IUserRepository iUserRepository;
     private final ICarMapper iCarMapper;

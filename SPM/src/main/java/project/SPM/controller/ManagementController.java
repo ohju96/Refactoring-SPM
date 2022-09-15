@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import project.SPM.service.IManagementService;
+import project.SPM.service.ManagementService;
 import project.SPM.validator.NoticeValidator;
 
 
@@ -16,7 +16,7 @@ import project.SPM.validator.NoticeValidator;
 public class ManagementController {
 
     private final NoticeValidator noticeValidator;
-    private final IManagementService iManagementService;
+    private final ManagementService iManagementService;
 
     @InitBinder("noticeVo")
     public void initNotice(WebDataBinder dataBinder) {

@@ -12,7 +12,7 @@ import project.SPM.Entity.UserEntity;
 import project.SPM.dto.UserDTO;
 import project.SPM.validator.UserValidator;
 import project.SPM.vo.UserVo;
-import project.SPM.service.impl.UserService;
+import project.SPM.service.impl.UserServiceImpl;
 import project.SPM.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final UserValidator userValidator;
 
     @InitBinder

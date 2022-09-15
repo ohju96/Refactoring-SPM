@@ -10,7 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import project.SPM.Entity.UserEntity;
 import project.SPM.dto.UserDTO;
-import project.SPM.service.IInfoService;
+import project.SPM.service.InfoService;
 import project.SPM.validator.UserValidator;
 import project.SPM.vo.UserVo;
 
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class InfoController {
 
-    private final IInfoService iInfoService;
+    private final InfoService iInfoService;
     private final UserValidator userValidator;
 
     @InitBinder("userVo")

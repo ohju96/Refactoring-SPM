@@ -2,29 +2,25 @@ package project.SPM.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sourceforge.tess4j.Tesseract;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import project.SPM.dto.CarDTO;
-import project.SPM.dto.OcrDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.dto.ViewCarDTO;
 import project.SPM.mapper.ICarListMapper;
 import project.SPM.mapper.ICheckMapper;
-import project.SPM.service.ICheckService;
-import project.SPM.util.CmmUtil;
+import project.SPM.service.CheckService;
 import project.SPM.util.DateUtil;
 import project.SPM.vo.CheckListVo;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 @Slf4j
 @Service("CheckService")
 @RequiredArgsConstructor
-public class CheckService implements ICheckService {
+public class CheckServiceImpl implements CheckService {
     // TODO: 2022-05-16 View에서 받아온 값이 null로 체크되는데 이거 확인해야 한다. 
     private final ICheckMapper iCheckMapper;
     private final ICarListMapper iCarListMapper;

@@ -21,8 +21,8 @@ import project.SPM.Entity.UserEntity;
 import project.SPM.dto.CarDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.dto.ViewCarDTO;
-import project.SPM.service.ICarListService;
-import project.SPM.service.ICheckService;
+import project.SPM.service.CarListService;
+import project.SPM.service.CheckService;
 import project.SPM.util.DateUtil;
 import project.SPM.util.FileUtil;
 import project.SPM.vo.CheckListVo;
@@ -38,8 +38,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarCheckController {
 
-    private final ICarListService iCarListService;
-    private final ICheckService iCheckService;
+    private final CarListService iCarListService;
+    private final CheckService iCheckService;
     private final RestTemplate restTemplate;
 
     // 배포용 경로

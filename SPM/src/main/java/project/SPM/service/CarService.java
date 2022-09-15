@@ -5,7 +5,7 @@ import project.SPM.dto.SessionIdDTO;
 import project.SPM.dto.UserDTO;
 import project.SPM.vo.UpdateCarListVo;
 
-public interface ICarService {
+public interface CarService {
 
     // 엑셀 파일 등록 로직
     boolean createCar(SessionIdDTO sessionIdDTO) throws Exception;

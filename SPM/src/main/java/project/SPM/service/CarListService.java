@@ -5,7 +5,7 @@ import project.SPM.dto.UserDTO;
 
 import java.util.List;
 
-public interface ICarListService {
+public interface CarListService {
 
     // 전체 차량 조회 로직
     List<CarDTO> getFullCarList(UserDTO userDTO) throws Exception;
