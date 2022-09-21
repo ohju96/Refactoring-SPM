@@ -30,7 +30,7 @@ public class WeatherServiceImpl implements WeatherService {
         String lat = CmmUtil.nvl(weatherDto.getLat()); //위도
         String lon = CmmUtil.nvl(weatherDto.getLon()); //경도
 
-        String apiParam = "?lat=" + lat + "%lon=" + lon + "&appid=" + apiKey + "&units=metric";
+        String apiParam = "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=metric";
         log.info("apiParam : {}", apiParam);
 
         String json = NetworkUtil.get(WeatherService.apiURL + apiParam);

@@ -1,5 +1,6 @@
 package project.SPM.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 
 import java.io.*;
@@ -8,14 +9,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+@Slf4j
 public class NetworkUtil {
+
     public static String get(String apiUrl) {
+        log.info("### get 단일 파라미터 시작");
+        log.info("### apiUrl : {}", apiUrl);
+        log.info("### get 단일 파라미터 종료");
         return get(apiUrl, null);
     }
 
     public static String get(String apiUrl, @Nullable Map<String, String> requestHeaders) {
 
+        log.info("### get 시작");
+
+        log.info("### apiUrl : {}", apiUrl);
+
         HttpURLConnection con = connect(apiUrl);
+        log.info("### con : {}", con);
 
         try {
             con.setRequestMethod("GET");
@@ -32,11 +43,14 @@ public class NetworkUtil {
 
             // API 호출이 성공하면
             if (responseCode == HttpURLConnection.HTTP_OK) {
+                log.info("### api 호출 성공");
                 return readBody(con.getInputStream());
-            } else {
+            } else { // 에러 발생
+                log.info("### api 호출 실패");
                 return readBody(con.getErrorStream());
             }
         } catch (IOException e) {
+            log.info("Exception 발생");
             throw new RuntimeException("API 요청과 응답 실패", e);
         } finally {
             con.disconnect();
