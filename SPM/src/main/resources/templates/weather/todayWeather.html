@@ -15,6 +15,56 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link th:href="@{/bootstrap/css/styles.css}" rel="stylesheet" />
+
+    <script src="/bootstrap/js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let lon, lat;
+            navigator.geolocation.getCurrentPosition(function (position) {
+                lat = position.coords.latitude; //위도
+                lon = position.coords.longitude; //경도
+
+                $.ajax({
+                    url: "/weather/getWeather",
+                    type: "get",
+                    dataType: "JSON",
+                    data: {
+                        "lon": lon,
+                        "lat": lat
+                    },
+                    success: function (json) {
+                        $("#currentTemp").append(json.currentTemp);
+
+                        const dailyList = json.dailyList;
+
+                        for (const daily of dailyList) {
+                            let day = daily.day;
+                            let sunrise = daily.sunrise;
+                            let sunset = daily.sunset;
+                            let moonrise = daily.moonrise;
+                            let moonset = daily.moonset;
+                            let dayTemp = daily.dayTemp;
+                            let dayTempMax = daily.dayTempMax;
+                            let dayTempMin = daily.dayTempMin;
+
+                            $("#daily_weather").append("<div><b>" + day + "의 날씨</b></div>")
+                            $("#daily_weather").append("<div>")
+                            $("#daily_weather").append("<span>해뜨는 시간 : " + sunrise + " </span>")
+                            $("#daily_weather").append("<span>해지는 시간 : " + sunset + " </span>")
+                            $("#daily_weather").append("<span>달뜨는 시간 : " + moonrise + " </span>")
+                            $("#daily_weather").append("<span>달뜨는 시간 : " + moonset + " </span>")
+                            $("#daily_weather").append("<span>평균 기온: " + dayTemp + " </span>")
+                            $("#daily_weather").append("<span>최고 기온: " + dayTempMax + " </span>")
+                            $("#daily_weather").append("<span>최저 기온: " + dayTempMin + " </span>")
+                            $("#daily_weather").append("</div>")
+                            $("#daily_weather").append("<br/><br/>")
+
+                        }
+                    }
+                });
+            });
+        })
+    </script>
 </head>
 <body>
 <!-- Navigation-->
@@ -56,19 +106,27 @@
             <!-- Post preview-->
 
             <h2>오늘 날씨</h2>
-            오늘의 날씨입니다.
-            <br>
-            <br>
-            날이 좋다.
 
+            <div>
+                <label>현재 기온 : </label>
+                <span id="currentTemp"></span>
+            </div>
+            <br/><br/>
+            <div>
+                <b>일자별 기온</b>
+            </div>
+            <hr/>
+            <div id="daily_weather">
+
+            </div>
 
             <hr class="my-4" />
 
-            <div class="post-preview">
-                <form th:action="@{/weather/todayWeather}" method="get">
-                    <button class="btn btn-outline-primary" type="submit">날씨 확인하기</button>
-                </form>
-            </div>
+<!--            <div class="post-preview">-->
+<!--                <form th:action="@{/weather/getWeather}" method="get">-->
+<!--                    <button class="btn btn-outline-primary" type="submit">날씨 확인하기</button>-->
+<!--                </form>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
