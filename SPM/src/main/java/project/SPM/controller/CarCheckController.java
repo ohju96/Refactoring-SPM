@@ -48,7 +48,7 @@ public class CarCheckController {
 //    final private String FILE_UPLOAD_SAVE_PATH = "C:\\upload";
 
     // 테스트용 경로 : 맥
-    final private String FILE_UPLOAD_SAVE_PATH = "~/MyFile/File/upload";
+    final private String FILE_UPLOAD_SAVE_PATH = "/Users/ohju/MyFile/File/upload";
 
     @Value("${kakao.appkey}")
     private String appkey;

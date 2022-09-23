@@ -32,14 +32,24 @@ public class CarListController {
     @GetMapping("/fullCarList")
     public String fullCarList(Model model, HttpSession session) throws Exception {
 
+        log.info("### 전체 차량 리스트 컨트롤러 시작");
         UserEntity userEntity = (UserEntity) session.getAttribute("userDTO");
+        log.info("### userEntity : " + userEntity.getUserId());
 
         UserDTO userDTO = new UserDTO(userEntity.getUserId());
 
         List<CarDTO> carDTOList = iCarListService.getFullCarList(userDTO);
+        log.info("carDTOList : " + carDTOList.get(0).getUserId());
+        log.info("carDTOList : " + carDTOList.get(0).getCarNumber());
+        log.info("carDTOList : " + carDTOList.get(0).getSort());
+        log.info("carDTOList : " + carDTOList.get(0).getChecks());
+        log.info("carDTOList : " + carDTOList.get(0).getAddress());
+        log.info("carDTOList : " + carDTOList.get(0).getPhoneNumber());
+        log.info("carDTOList : " + carDTOList.get(0).getName());
 
         model.addAttribute(carDTOList);
 
+        log.info("### 전체 차량 리스트 컨트롤러 종료");
         return "carList/fullCarList";
 
     }

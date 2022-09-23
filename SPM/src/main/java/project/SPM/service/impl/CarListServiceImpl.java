@@ -22,6 +22,9 @@ public class CarListServiceImpl implements CarListService {
     // 전체 차량 조회
     @Override
     public List<CarDTO> getFullCarList(UserDTO userDTO) throws Exception {
+        log.info("### .getFullCarList 시작");
+
+        log.info("userDto.getUserId : " + userDTO.getUserId());
 
         // 결과 값
         List<CarDTO> carDTOList = null;
@@ -32,6 +35,7 @@ public class CarListServiceImpl implements CarListService {
             carDTOList = new LinkedList<>();
         }
 
+        log.info("### .getFullCarList 종료");
         return carDTOList;
     }
 

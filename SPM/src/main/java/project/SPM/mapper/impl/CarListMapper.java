@@ -25,10 +25,14 @@ public class CarListMapper implements ICarListMapper {
     @Override
     public List<CarDTO> getFullCarList(UserDTO userDTO) throws Exception {
 
+        log.info(".getFullCarList 시작");
+
         // 조회 결과를 전달하기 위한 객체
         List<CarDTO> carDTOList = new LinkedList<>();
 
         MongoCollection<Document> col = mongo.getCollection("Car");
+
+        log.info("### userDto.getUserId : {}", userDTO.getUserId());
 
         // 조회할 조건, SQL의 WHERE 역할과 같다.
         Document query = new Document();
@@ -54,10 +58,17 @@ public class CarListMapper implements ICarListMapper {
             carDTO.setAddress(doc.getString("address"));
             carDTO.setSort(doc.getString("sort"));
 
+            log.info("name : {}", carDTO.getName());
+            log.info("phoneNumber : {}", carDTO.getPhoneNumber());
+            log.info("carNumber : {}", carDTO.getCarNumber());
+            log.info("address : {}", carDTO.getAddress());
+            log.info("sort : {}", carDTO.getSort());
+
             carDTOList.add(carDTO);
 
         }
 
+        log.info(".getFullCarList 종료");
         return carDTOList;
     }
 
