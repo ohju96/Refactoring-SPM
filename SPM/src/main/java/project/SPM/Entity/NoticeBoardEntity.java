@@ -34,7 +34,7 @@ public class NoticeBoardEntity {
     private String contents;
 
     @NonNull
-    @Column(name = "userId", nullable = false)
+    @Column(name = "user_Id", nullable = false)
     private String userId;
 
     @Column(name = "read_cnt", nullable = false)

@@ -101,6 +101,7 @@ public class UserController {
     @PostMapping("/logIn/page")
     public String login(@ModelAttribute UserVo userVo, HttpServletRequest request, HttpSession session, Model model) throws Exception {
 
+        log.info("### login start");
         // 로그인 전에 세션 삭제
         session = request.getSession(false);
         if (session != null) {
@@ -121,16 +122,19 @@ public class UserController {
 
         if (res == true) {
             UserEntity dto = userService.loginSession(userDTO);
+            log.info("### dto.userId : {}", dto.getUserId());
             session = request.getSession();
             session.setAttribute(SessionConst.LOGIN_MEMBER, dto);
         } else {
             model.addAttribute("msg", "아이디 및 비밀번호를 다시 확인해주세요.");
             model.addAttribute("url", "/user/logIn");
+        log.info("### login end");
             return "redirect";
         }
 
         model.addAttribute("msg", "로그인 성공");
         model.addAttribute("url", "/user/index");
+        log.info("### login end");
         return "redirect";
     }
 

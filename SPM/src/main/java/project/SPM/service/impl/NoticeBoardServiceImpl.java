@@ -29,9 +29,14 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
         List<NoticeBoardEntity> resultList = noticeBoardRepository.findAllByOrderByNoticeBoardSeqDesc();
 
+        log.info("### userId : {}", resultList.get(0).getUserId());
+
         List<NoticeBoardDto> noticeBoardDtoList = new ObjectMapper().convertValue(resultList,
                 new TypeReference<List<NoticeBoardDto>>() {
                 });
+
+        log.info("### userId : " + noticeBoardDtoList.get(0).getUserId());
+        log.info("### userName : " + noticeBoardDtoList.get(0).getUserName());
 
         log.info("### .getNoticeBoardList end");
         return noticeBoardDtoList;
