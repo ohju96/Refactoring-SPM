@@ -140,6 +140,7 @@ public class UserServiceImpl implements project.SPM.service.UserService {
     public UserEntity loginSession(UserDTO userDTO) throws Exception {
 
         List<UserEntity> userDTOList = iUserRepository.findAllByUserId(userDTO.getUserId());
+        log.info("### Session UserId 찾기 : " + userDTOList.get(0).getUserId());
         UserEntity userEntity = userDTOList.get(0);
 
         return userEntity;

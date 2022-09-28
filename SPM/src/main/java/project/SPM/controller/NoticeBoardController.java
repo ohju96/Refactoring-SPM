@@ -7,9 +7,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import project.SPM.Entity.UserEntity;
 import project.SPM.dto.NoticeBoardDto;
+import project.SPM.dto.SessionIdDTO;
+import project.SPM.dto.UserDTO;
 import project.SPM.service.NoticeBoardService;
 import project.SPM.util.CmmUtil;
+import project.SPM.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,7 +50,7 @@ public class NoticeBoardController {
     }
 
     // 게시판 상세보기
-    @GetMapping("/noticeInfo")
+    @GetMapping("/noticeBoardInfo")
     public String noticeInfo(HttpServletRequest request, ModelMap modelMap) throws Exception {
         log.info("### .noticeInfo start");
 
@@ -196,7 +200,13 @@ public class NoticeBoardController {
 
         try {
 
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));//아이디
+////            String user_id = CmmUtil.nvl((String) session.getAttribute("user_Id"));//아이디
+//            UserDTO userDTO = new UserDTO();
+//            userDTO = (UserDTO) session.getAttribute("userDTO");
+
+            UserEntity userEntity = (UserEntity) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+            String user_id = CmmUtil.nvl(userEntity.getUserId());//아이디
             String title = CmmUtil.nvl(request.getParameter("title"));
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn"));
             String contents = CmmUtil.nvl(request.getParameter("contents"));

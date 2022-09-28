@@ -115,13 +115,22 @@
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="m: ${resultList}">
                         <div class="divTableCell" th:text="${m.noticeBoardSeq}"></div>
-                        <div class="divTableCell" th:text="${m.title}"></div>
+<!--                        <div class="divTableCell" th:text="${m.title}"></div>-->
+                        <div class="divTableCell">
+                            <a th:href="@{'/noticeBoard/noticeBoardInfo/' + ${m.noticeBoardSeq}}">
+                                <span th:text="${m.title}"></span>
+                            </a>
+                        </div>
                         <div class="divTableCell" th:text="${m.readCnt}"></div>
-                        <div class="divTableCell" th:text="${m.userName}"></div>
+                        <div class="divTableCell" th:text="${m.userId}"></div>
                         <div class="divTableCell" th:text="${m.regDt}"></div>
                     </div>
                 </div>
             </div>
+
+            <form th:action="@{/noticeBoard/noticeBoardReg}" method="get">
+                <button class="btn btn-outline-primary" type="submit">[글쓰기]</button>
+            </form>
 
 
             <!-- Divider-->
