@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import project.SPM.Entity.UserEntity;
@@ -50,11 +51,11 @@ public class NoticeBoardController {
     }
 
     // 게시판 상세보기
-    @GetMapping("/noticeBoardInfo")
-    public String noticeInfo(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    @GetMapping("/noticeBoardInfo/{noticeBoardSeq}")
+    public String noticeInfo(@PathVariable ("noticeBoardSeq") String noticeBoardSeq, ModelMap modelMap) throws Exception {
         log.info("### .noticeInfo start");
 
-        String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));//공지글번호
+        String nSeq = noticeBoardSeq;//공지글번호
         log.info("### nSeq : {}", nSeq);
 
         NoticeBoardDto noticeBoardDto = new NoticeBoardDto();
@@ -62,6 +63,8 @@ public class NoticeBoardController {
 
         // 공지사항 상세정보 가져오기
         NoticeBoardDto requestDto = noticeBoardService.getNoticeBoardInfo(noticeBoardDto, true);
+
+        log.info("### requestDto : {}", requestDto.getContents());
 
         if (requestDto == null) {
             requestDto = new NoticeBoardDto();

@@ -17,7 +17,7 @@ public interface NoticeBoardRepository extends JpaRepository<NoticeBoardEntity, 
     NoticeBoardEntity findByNoticeBoardSeq(Long noticeBoardSeq);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE NOTICE A SET A.read_cnt = IFNULL(A.read_cnt, 0) + 1 WHERE A.noticeBoard_seq = :noticeBoardSeq",
+    @Query(value = "UPDATE notice A SET A.read_cnt = IFNULL(A.read_cnt, 0) + 1 WHERE A.notice_Board_seq = :noticeBoardSeq",
     nativeQuery = true)
     int updateReadCnt(@Param("noticeBoardSeq") Long noticeBoardSeq);
 }
