@@ -143,12 +143,17 @@
                         </div>
                     </div>
                 </div>
-
-
             <!-- Divider-->
         </div>
     </div>
 </div>
+
+
+    <span th:if="${requestDto.userId.equals(session.userDTO.userId)}">
+        <a th:href="@{/noticeBoard/noticeBoardInfo?nSeq=requestDto.noticeBoardSeq}">[수정]</a>
+        <a th:href="@{/noticeBoard/noticeBoardDelete?nSeq=requestDto.noticeBoardSeq}">[삭제]</a>
+        <a th:href="@{/noticeBoard/noticeBoardList}">[목록]</a>
+    </span>
             <!-- Pager-->
             <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
                                                             th:href="@{/noticeBoard/noticeBoardList}">뒤로가기</a></div>
