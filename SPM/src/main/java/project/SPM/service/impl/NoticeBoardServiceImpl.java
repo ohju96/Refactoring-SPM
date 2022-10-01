@@ -29,14 +29,14 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
         List<NoticeBoardEntity> resultList = noticeBoardRepository.findAllByOrderByNoticeBoardSeqDesc();
 
-        log.info("### userId : {}", resultList.get(0).getUserId());
+//        log.info("### userId : {}", resultList.get(0).getUserId());
 
         List<NoticeBoardDto> noticeBoardDtoList = new ObjectMapper().convertValue(resultList,
                 new TypeReference<List<NoticeBoardDto>>() {
                 });
-
-        log.info("### userId : " + noticeBoardDtoList.get(0).getUserId());
-        log.info("### userName : " + noticeBoardDtoList.get(0).getUserName());
+//
+//        log.info("### userId : " + noticeBoardDtoList.get(0).getUserId());
+//        log.info("### userName : " + noticeBoardDtoList.get(0).getUserName());
 
         log.info("### .getNoticeBoardList end");
         return noticeBoardDtoList;
@@ -80,12 +80,16 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         String noticeYn = CmmUtil.nvl(noticeBoardDto.getNoticeYn());
         String contents = CmmUtil.nvl(noticeBoardDto.getContents());
         String userId = CmmUtil.nvl(noticeBoardDto.getUserId());
+        String regDt = CmmUtil.nvl(noticeBoardDto.getRegDt());
+        String regId = CmmUtil.nvl(noticeBoardDto.getRegId());
 
         log.info("### noticeBoardSeq : {}", noticeBoardSeq);
         log.info("### title : {}", title);
         log.info("### noticeYn : {}", noticeYn);
         log.info("### contents : {}", contents);
         log.info("### userId : {}", userId);
+        log.info("### RegDt : {}", regDt);
+        log.info("### RegId : {}", regId);
 
         // 현재 공지사항 조회수 가져오기
         NoticeBoardEntity resultEntity = noticeBoardRepository.findByNoticeBoardSeq(noticeBoardSeq);
@@ -93,6 +97,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         // 수정할 값들을 빌더를 통해 엔티티에 저장
         NoticeBoardEntity requestEntity = NoticeBoardEntity.builder()
                 .noticeBoardSeq(noticeBoardSeq).title(title).noticeYn(noticeYn).contents(contents).userId(userId)
+                .regDt(regDt).regId(regId)
                 .readCnt(resultEntity.getReadCnt())
                 .build();
 

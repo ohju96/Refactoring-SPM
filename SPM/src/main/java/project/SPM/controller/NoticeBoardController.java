@@ -85,6 +85,7 @@ public class NoticeBoardController {
         String msg = "";
 
         try {
+
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));
             log.info("### nSeq : {}", nSeq);
 
@@ -116,13 +117,15 @@ public class NoticeBoardController {
         log.info("### noticeBoardupdate start");
 
         String msg = "";
+        UserEntity userEntity = (UserEntity) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         try {
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));//아이디
+            String user_id = userEntity.getUserId();//아이디
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));
             String title = CmmUtil.nvl(request.getParameter("title"));
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn"));
+            String noticeYn = CmmUtil.nvl(request.getParameter("noticeBoardYn"));
             String contents = CmmUtil.nvl(request.getParameter("contents"));
+            String regDt = CmmUtil.nvl(request.getParameter("regDt"));
 
             log.info("### userId : {}", user_id);
             log.info("### nSeq : {}", nSeq);
@@ -136,6 +139,7 @@ public class NoticeBoardController {
             requestDto.setTitle(title);
             requestDto.setNoticeYn(noticeYn);
             requestDto.setContents(contents);
+            requestDto.setRegDt(regDt);
 
             // 게시글 수정 DB
             noticeBoardService.updateNoticeBoardInfo(requestDto);
@@ -151,7 +155,7 @@ public class NoticeBoardController {
         }
 
         log.info("### noticeBoardupdate end");
-        return "/noticeBoard/noticeBoardMsgToList";
+        return "/noticeBoard/MsgToList";
     }
 
     // 게시판 글 삭제
