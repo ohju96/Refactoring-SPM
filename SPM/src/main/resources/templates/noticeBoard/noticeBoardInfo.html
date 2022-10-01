@@ -146,7 +146,7 @@
             <!-- Divider-->
 
     <span th:if="${requestDto.userId.equals(session.userDTO.userId)}">
-        <a th:href="@{/noticeBoard/noticeBoardInfo/(nSeq)}">[수정]</a>
+        <a th:href="@{/noticeBoard/noticeBoardEditInfo(nSeq=${requestDto.noticeBoardSeq})}">[수정]</a>
         <a th:href="@{/noticeBoard/noticeBoardDelete(nSeq=${requestDto.noticeBoardSeq})}">[삭제]</a>
     </span>
         <a th:href="@{/noticeBoard/noticeBoardList}">[목록]</a>

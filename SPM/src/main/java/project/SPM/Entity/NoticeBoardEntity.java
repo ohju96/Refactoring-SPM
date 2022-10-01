@@ -14,6 +14,7 @@ import javax.persistence.*;
 @DynamicUpdate // 데이터 수정할 때 null 제외 - 게시판 내용 중 제목만 수정할 때 제목만 변경하는 update 쿼리 생성
 @Builder
 @Entity
+@Cacheable
 public class NoticeBoardEntity {
 
     @Id
