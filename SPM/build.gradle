@@ -32,6 +32,7 @@ dependencies {
 	implementation 'net.nurigo:sdk:4.2.3' //문자API를 위한..
 	implementation 'net.nurigo:javaSDK:2.2' //문자API를 위한..
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket' //실시간 채팅을 위한 웹 소켓
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
