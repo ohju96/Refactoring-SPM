@@ -15,6 +15,14 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link th:href="@{/bootstrap/css/styles.css}" rel="stylesheet" />
+
+        <style>
+            .field-error {
+                border-color: #dc3545;
+                color: #dc3545;
+            }
+        </style>
+
     </head>
     <body>
         <!-- Navigation-->
@@ -42,8 +50,8 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>관리</h1>
-                            <span class="subheading">주민들에게 안내 사항이 있으신가요?<br>여기서 해결하세요!</span>
+                            <h1>자동 번역 문자 전송</h1>
+                            <span class="subheading">한글로 문자를 적어보세요! 자동으로 번역되어 전송됩니다.</span>
                         </div>
                     </div>
                 </div>
@@ -54,34 +62,31 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="/dd/post.html" th:href="@{/management/notice}">
-                            <h2 class="post-title">공지 사항 전파</h2>
-                            <h3 class="post-subtitle">전체 주민에게 공지사항을 전송할 수 있습니다.</h3>
-                        </a>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="/dd/post.html" th:href="@{/management/visitForm}">
-                            <h2 class="post-title">방문자 양식</h2>
-                            <h3 class="post-subtitle">방문자 연락처 등록만으로 간단하게 양식을 보낼 수 있습니다.</h3>
-                        </a>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
+                    <b>상대방 휴대폰 번호를 입력 후 메시지를 입력해주세요.
 
-                    <div class="post-preview">
-                        <a href="/dd/post.html" th:href="@{/management/papagoSms}">
-                            <h2 class="post-title">자동 번역 문자 전송</h2>
-                            <h3 class="post-subtitle">한글로 문자를 적어보세요! 자동으로 번역되어 전송됩니다.</h3>
-                        </a>
-                    </div>
+                        <br> 입력한 내용이 영어로 자동 번역되어 전송됩니다.</b>
+
+                    <br>
+
+                    <form th:action="@{/management/papagoSms}" th:object="${papagoSmsDto}" th:method="post">
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg4">전화번호</span>
+                            <input th:type="text" th:field="*{phoneNm}" th:errorclass="field-error" th:class="form-control" id="visitorPhoneNumber" placeholder="01012345678" />
+                        </div>
+
+                        <div class="form-floating">
+                            <textarea th:type="text" th:field="*{message}" th:errorclass="field-error" th:class="form-control" class="form-control" id="content" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                            <label for="content" th:text="#{label.noticeDTO.message}">내용</label>
+                            <div th:class="field-error" th:errors="*{message}" class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                        </div>
+
+                        <button class="btn btn-primary text-uppercase" type="submit">전송</button>
+                    </form>
                     <!-- Divider-->
                     <hr class="my-4" />
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" th:href="@{/user/index}">홈으로</a></div>
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" th:href="@{/carManagement/carManagement}">뒤로가기</a></div>
                 </div>
             </div>
         </div>
@@ -92,7 +97,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a th:href="@{https://ohju96.notion.site/d0763826975b427e8729acd9a9b9c75a?v=4711071a16a54f4e90f54172cb0cddb9}" th:target="_blank">
+                                <a th:href="@{https://ohju96.notion.site/apache-poi-mongoDB-7946445271c54b61b5408120e1f16119}" th:target="_blank">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-solid fa-book fa-stack-1x fa-inverse"></i>
