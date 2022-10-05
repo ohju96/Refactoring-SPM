@@ -57,9 +57,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         // 공지사항 상세 내역
         NoticeBoardEntity resultEntity = noticeBoardRepository.findByNoticeBoardSeq(noticeBoardDto.getNoticeBoardSeq());
 
-        log.info("### resultEntity : {}", resultEntity.getUserId());
-        log.info("### resultEntity : {}", resultEntity.getNoticeYn());
-        log.info("### resultEntity : {}", resultEntity.getContents());
+        log.info("### resultEntity userId : {}", resultEntity.getUserId());
+        log.info("### resultEntity noticeYn : {}", resultEntity.getNoticeYn());
+        log.info("### resultEntity contents : {}", resultEntity.getContents());
 
         // 엔티티 값 Dto에 넣기
         NoticeBoardDto resultNoticeBoardDto = new ObjectMapper().convertValue(resultEntity, NoticeBoardDto.class);
