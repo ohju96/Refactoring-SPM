@@ -13,11 +13,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.SPM.Entity.UserEntity;
-import project.SPM.dto.CarDTO;
-import project.SPM.dto.NoticeDTO;
-import project.SPM.dto.VisitorDTO;
+import project.SPM.dto.*;
 import project.SPM.service.ManagementService;
+import project.SPM.service.PapagoService;
 import project.SPM.validator.NoticeValidator;
+import project.SPM.validator.PapagoSmsValidator;
 import project.SPM.validator.VisitorValidator;
 
 import javax.servlet.http.HttpSession;
@@ -32,7 +32,11 @@ public class SmsController {
 
     private final VisitorValidator visitorValidator;
     private final NoticeValidator noticeValidator;
+
+    private final PapagoSmsValidator papagoSmsValidator;
     private final ManagementService iManagementService;
+
+    private final PapagoService papagoService;
 
     @Value("${sms.key}")
     private String smsKey;
@@ -54,6 +58,54 @@ public class SmsController {
         log.debug("### init binder : {}", dataBinder);
         dataBinder.addValidators(noticeValidator);
     }
+
+    @InitBinder("PapagoSmsDto")
+    public void setPapagoSmsValidator(WebDataBinder dataBinder) {
+        log.info("### init binder : {}", dataBinder);
+        dataBinder.addValidators(papagoSmsValidator);
+    }
+
+    // == 외국인 방문자에게 자동 번역 문자 전송 == //
+
+    // 번역 문자 전송 페이지
+    @GetMapping("/management/papagoSms")
+    public ModelAndView papagoSmsPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("/management/papagoSms");
+        modelAndView.addObject("papagoSmsDto", new PapagoSmsDto());
+        return modelAndView;
+    }
+
+    // 번역 문자 전송 처리 로직
+    @PostMapping("/management/papagoSms")
+    public ModelAndView papagoSms(@Validated @ModelAttribute PapagoSmsDto papagoSmsDto, BindingResult bindingResult) throws Exception {
+
+        ModelAndView mav = new ModelAndView();
+
+        if (bindingResult.hasErrors()) {
+            mav.addObject("msg", "규칙에 맞게 작성해 주세요.");
+            mav.addObject("url", "/management/papagoSms");
+            mav.setViewName("redirect");
+            return mav;
+        }
+
+        // 문장 번역
+        String translatedText = papagoService.translate(papagoSmsDto.getMessage());
+
+        // Dto에 번역된 정보 담기
+        papagoSmsDto.setMessage(translatedText);
+
+        // 문자 전송 및 결과 가져오기
+        ResultDto resultDto = iManagementService.sendTranslatedText(papagoSmsDto);
+
+        mav.addObject("msg", resultDto.getMsg());
+        mav.addObject("url", resultDto.getUrl());
+        mav.setViewName("redirect");
+
+        return mav;
+    }
+
+
+    // == 내용 끝 == //
 
     // 방문자 페이지
     @GetMapping("/management/visitForm")

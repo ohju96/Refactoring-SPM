@@ -2,18 +2,20 @@ package project.SPM.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.java_sdk.api.Message;
+//import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import project.SPM.dto.CarDTO;
-import project.SPM.dto.NoticeDTO;
-import project.SPM.dto.SmsDTO;
+import project.SPM.dto.*;
 import project.SPM.mapper.IManagementMapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -32,6 +34,66 @@ public class ManagementServiceImpl implements project.SPM.service.ManagementServ
 
     @Value("${sms.phone}")
     private String smsPhone;
+
+    // == 자동 번역 문자 전송 시작 == //
+
+    @Override
+    public ResultDto sendTranslatedText(PapagoSmsDto papagoSmsDto) throws Exception {
+        log.info("### sendTranslatedText start");
+
+        String api_key = smsId;
+        String api_secret = smsKey;
+        String to = smsPhone;
+
+        ResultDto resultDto = new ResultDto();
+
+        Message message = new Message(api_key, api_secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", to);
+        params.put("from", papagoSmsDto.getPhoneNm());
+        params.put("type", "SMS");
+        params.put("text", papagoSmsDto.getMessage());
+        params.put("app_version", "test app 1.2"); // application name and version
+
+        try {
+            log.info("### 메시지 전송 시작");
+            JSONObject obj = (JSONObject) message.send(params);
+            log.info("### obj : {}", obj.toString());
+
+            JSONObject jsonObject = (JSONObject) obj;
+
+            boolean isEnd = false;
+            String msg;
+            String url = "/management/management";
+
+            if ((Long) jsonObject.get("success_count") == 1) {
+                msg = "전송 성공";
+                isEnd = true;
+            } else if ((Long) jsonObject.get("success_count") == null) {
+                msg = "전송 실패 : null";
+                isEnd = true;
+            } else {
+                msg = "전송 실패";
+                isEnd = true;
+            }
+
+            if (isEnd) {
+                resultDto.setMsg(msg);
+                resultDto.setUrl(url);
+            }
+
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+            resultDto.setMsg(e.getMessage());
+            resultDto.setUrl("/management/management");
+        } finally {
+            log.info("### sendTranslatedText end");
+            return resultDto;
+        }
+    }
+
+    // == 자동 번역 문자 전송 종료 == //
 
     // Sms 전송하기
     @Override
@@ -79,24 +141,24 @@ public class ManagementServiceImpl implements project.SPM.service.ManagementServ
         return carDTOList;
     }
 
-    // TODO: 2022-06-17 메시지 충전 할 것, 후 테스트 할 것
-    // 문자 전송 메소드
-    public SingleMessageSentResponse sendSms(SmsDTO smsDTO) {
-
-        log.debug("### sendSms Start");
-        log.debug("### sendSms - smsDTO : {}", smsDTO);
-
-        messageService = NurigoApp.INSTANCE.initialize(smsId, smsKey,  "https://api.coolsms.co.kr");
-
-        Message message = new Message();
-        message.setFrom(smsDTO.getFrom());
-        message.setTo(smsDTO.getTo());
-        message.setText(smsDTO.getText());
-
-        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
-        log.debug("### response : {}", response);
-
-        return response;
-
-    }
+//    // TODO: 2022-06-17 메시지 충전 할 것, 후 테스트 할 것
+//    // 문자 전송 메소드
+//    public SingleMessageSentResponse sendSms(SmsDTO smsDTO) {
+//
+//        log.debug("### sendSms Start");
+//        log.debug("### sendSms - smsDTO : {}", smsDTO);
+//
+//        messageService = NurigoApp.INSTANCE.initialize(smsId, smsKey,  "https://api.coolsms.co.kr");
+//
+//        Message message = new Message();
+//        message.setFrom(smsDTO.getFrom());
+//        message.setTo(smsDTO.getTo());
+//        message.setText(smsDTO.getText());
+//
+//        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
+//        log.debug("### response : {}", response);
+//
+//        return response;
+//
+//    }
 }

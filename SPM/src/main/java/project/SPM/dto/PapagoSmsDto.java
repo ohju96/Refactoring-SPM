@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @Getter
 public class PapagoSmsDto {
 
+    @NotNull
+    @Size(min = 11, message = "휴대폰 번호 11자리를 입력해주세요.")
     private String phoneNm;
 
     @NotNull
