@@ -12,7 +12,7 @@
 
 ### 2. 새로운 기능
 
-> *1. 실시간 채팅 기능*   > 
+> *1. 실시간 채팅 기능*    
 > 이슈 :  https://github.com/ohju96/Refactoring-SPM/issues/20   
 > 사용 기술 : Web Socket   
 > 내용 : 생성된 채팅방 목록을 5초마다 보여주며 실시간으로 채팅이 가능하다.
